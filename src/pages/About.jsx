@@ -9,7 +9,7 @@ const About = () => {
                 <div className="section-line"></div>
             </div>
             <div className="about-content">
-                <div style={{ flex: 1.2 }}>
+                <div className="about-text-content" style={{ flex: 1.2 }}>
                     <div style={{ fontFamily: 'Fira Code, monospace', color: 'var(--accent-purple)', marginBottom: '1rem' }}>
                         &gt; cat about_me.txt
                     </div>

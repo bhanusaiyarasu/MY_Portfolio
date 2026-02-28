@@ -1,8 +1,18 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link, NavLink, Outlet } from 'react-router-dom'
 import logoImg from '../assets/logo.png'
 
 const Layout = () => {
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+    const toggleMenu = () => {
+        setIsMenuOpen(!isMenuOpen);
+    };
+
+    const closeMenu = () => {
+        setIsMenuOpen(false);
+    };
+
     const socialLinks = {
         github: "https://github.com/bhanusaiyarasu",
         linkedin: "https://www.linkedin.com/in/bhanu-sai-yarasu-9a8591357"
@@ -39,12 +49,15 @@ const Layout = () => {
                 </div>
 
                 <nav>
-                    <ul>
-                        <li><NavLink to="/" className={({ isActive }) => isActive ? 'active' : ''}>home</NavLink></li>
-                        <li><NavLink to="/projects" className={({ isActive }) => isActive ? 'active' : ''}>works</NavLink></li>
-                        <li><NavLink to="/skills" className={({ isActive }) => isActive ? 'active' : ''}>skills</NavLink></li>
-                        <li><NavLink to="/about" className={({ isActive }) => isActive ? 'active' : ''}>about-me</NavLink></li>
-                        <li><NavLink to="/contacts" className={({ isActive }) => isActive ? 'active' : ''}>contacts</NavLink></li>
+                    <div className="mobile-menu-icon" onClick={toggleMenu} style={{ cursor: 'pointer', fontSize: '1.5rem', color: 'var(--text-white)' }}>
+                        <i className={isMenuOpen ? "fas fa-times" : "fas fa-bars"}></i>
+                    </div>
+                    <ul className={isMenuOpen ? "nav-links active" : "nav-links"}>
+                        <li><NavLink to="/" onClick={closeMenu} className={({ isActive }) => isActive ? 'active' : ''}>home</NavLink></li>
+                        <li><NavLink to="/projects" onClick={closeMenu} className={({ isActive }) => isActive ? 'active' : ''}>works</NavLink></li>
+                        <li><NavLink to="/skills" onClick={closeMenu} className={({ isActive }) => isActive ? 'active' : ''}>skills</NavLink></li>
+                        <li><NavLink to="/about" onClick={closeMenu} className={({ isActive }) => isActive ? 'active' : ''}>about-me</NavLink></li>
+                        <li><NavLink to="/contacts" onClick={closeMenu} className={({ isActive }) => isActive ? 'active' : ''}>contacts</NavLink></li>
                     </ul>
                 </nav>
             </header>
