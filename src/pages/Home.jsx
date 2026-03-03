@@ -22,6 +22,17 @@ const Home = () => {
                 </div>
             </div>
 
+            {/* Animated Section Divider */}
+            <div className="section-divider">
+                <div className="divider-line"></div>
+                <div className="divider-particles">
+                    {[...Array(6)].map((_, i) => (
+                        <div key={i} className="divider-particle" style={{ animationDelay: `${i * 0.2}s` }}></div>
+                    ))}
+                </div>
+                <div className="divider-line"></div>
+            </div>
+
             {/* Hero Section */}
             <section id="home" className="hero">
                 <div className="hero-text">
@@ -58,6 +69,17 @@ const Home = () => {
                     </div>
                 </div>
             </section>
+
+            {/* Animated Section Divider */}
+            <div className="section-divider">
+                <div className="divider-line"></div>
+                <div className="divider-shapes">
+                    <div className="divider-shape shape-1"></div>
+                    <div className="divider-shape shape-2"></div>
+                    <div className="divider-shape shape-3"></div>
+                </div>
+                <div className="divider-line"></div>
+            </div>
 
             {/* Featured Projects */}
             <section style={{ marginTop: '5rem' }}>
@@ -97,6 +119,17 @@ const Home = () => {
                 </div>
             </section>
 
+            {/* Animated Section Divider */}
+            <div className="section-divider">
+                <div className="divider-line"></div>
+                <div className="divider-waves">
+                    <div className="divider-wave wave-1"></div>
+                    <div className="divider-wave wave-2"></div>
+                    <div className="divider-wave wave-3"></div>
+                </div>
+                <div className="divider-line"></div>
+            </div>
+
             {/* Skills Snippet */}
             <section style={{ marginTop: '5rem' }}>
                 <div className="section-title">
@@ -130,6 +163,17 @@ const Home = () => {
                     </div>
                 </div>
             </section>
+
+            {/* Animated Section Divider */}
+            <div className="section-divider">
+                <div className="divider-line"></div>
+                <div className="divider-grid">
+                    {[...Array(8)].map((_, i) => (
+                        <div key={i} className="divider-grid-item" style={{ animationDelay: `${i * 0.1}s` }}></div>
+                    ))}
+                </div>
+                <div className="divider-line"></div>
+            </div>
 
             {/* About Snippet */}
             <section style={{ marginTop: '5rem', marginBottom: '5rem' }}>
