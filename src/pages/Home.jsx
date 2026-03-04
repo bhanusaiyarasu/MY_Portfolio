@@ -1,208 +1,208 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import premiumHero from '../assets/premium_hero.png'
+
 import ribhanceImg from '../assets/ribhance_showcase.png'
 import portfolioImg from '../assets/portfolio_showcase.png'
 import hackerMe from '../assets/hacker-me.png'
+import globaliaSoftBlogImg from '../assets/Globaliasoft-Way-to-Become-a-Web-Developer.jpg'
+
 
 const Home = () => {
+    // Add Scroll Reveal effect on mount
+    React.useEffect(() => {
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        return () => observer.disconnect();
+    }, []);
+
     return (
-        <>
-            {/* Quote Section */}
-            <div style={{ textAlign: 'center', padding: '100px 0', position: 'relative' }}>
-                <div style={{ border: '1px solid var(--border-gray)', padding: '2rem', display: 'inline-block', position: 'relative' }}>
-                    <span style={{ position: 'absolute', top: '-15px', left: '20px', background: 'var(--bg-dark)', padding: '0 10px', fontSize: '2rem', color: 'var(--text-gray)' }}>"</span>
-                    <p style={{ fontSize: '1.5rem', fontWeight: '500' }}>In a world of variables, be the constant that breaks the loop.--X</p>
-                    <span style={{ position: 'absolute', bottom: '-25px', right: '20px', background: 'var(--bg-dark)', padding: '0 10px', fontSize: '2rem', color: 'var(--text-gray)' }}>"</span>
-                </div>
-                <div style={{ position: 'relative', textAlign: 'right', marginTop: '-1px' }}>
-                    <div style={{ border: '1px solid var(--border-gray)', display: 'inline-block', padding: '10px 20px', borderTop: '0' }}>
-                        - Mr. Who
-                    </div>
-                </div>
-            </div>
-
-            {/* Animated Section Divider */}
-            <div className="section-divider">
-                <div className="divider-line"></div>
-                <div className="divider-particles">
-                    {[...Array(6)].map((_, i) => (
-                        <div key={i} className="divider-particle" style={{ animationDelay: `${i * 0.2}s` }}></div>
-                    ))}
-                </div>
-                <div className="divider-line"></div>
-            </div>
-
+        <div className="home-page-wrap">
             {/* Hero Section */}
-            <section id="home" className="hero">
+            <section id="home" className="hero reveal">
                 <div className="hero-text">
-                    <div className="typing-text-1">
-                        <h1>Bhanusai is a <span>web designer</span></h1>
-                    </div>
-                    <div className="typing-text-2">
-                        <h1 style={{ marginTop: '-1rem' }}>and <span>front-end developer</span></h1>
-                    </div>
-                    <p style={{ color: 'var(--text-gray)', marginBottom: '2.5rem', maxWidth: '480px', fontSize: '1.1rem' }}>
-                        He crafts responsive websites where technologies meet creativity.
-                        Specializing in modern architectures, interactive UIs, and robust backends.
+                    <div className="badge-premium">UPLINK_ESTABLISHED</div>
+                    <h1 className="hero-title">
+                        Bhanusai <br />
+                        <span>Computer Engineer</span> & <br />
+                        <span className="grad-text">Developer Intern</span>
+                    </h1>
+                    <p className="hero-desc">
+                        Passionate developer specializing in <span className="highlight">React, WordPress, and Android</span>.
+                        Engineering modern web experiences with AI-driven efficiency and professional grade precision.
                     </p>
-                    <div style={{ display: 'flex', gap: '3rem', marginBottom: '2.5rem' }}>
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.2rem' }}>
-                            <h3 style={{ fontSize: '1.5rem', color: 'var(--text-white)' }}>15+</h3>
-                            <p style={{ color: 'var(--text-gray)', fontSize: '0.85rem', margin: 0 }}>Projects Built</p>
-                        </div>
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.2rem' }}>
-                            <h3 style={{ fontSize: '1.5rem', color: 'var(--text-white)' }}>1+</h3>
-                            <p style={{ color: 'var(--text-gray)', fontSize: '0.85rem', margin: 0 }}>Years Exp.</p>
-                        </div>
-                    </div>
-                    <Link to="/contacts" className="btn-outline">Contact me!!</Link>
-                </div>
-                <div className="hero-image">
-                    <img src={premiumHero} alt="Premium hacker illustration" />
-                    <div className="dot-pattern" style={{ position: 'absolute', top: '10%', right: '-10%', zIndex: 1 }}>
-                        {[...Array(25)].map((_, i) => <div key={i} className="dot"></div>)}
-                    </div>
-                    <div className="status-box">
-                        <div className="status-dot"></div>
-                        <span>Currently working on <strong style={{ color: 'var(--text-white)' }}>Portfolio</strong></span>
+                    <div className="hero-actions">
+                        <Link to="/contacts" className="btn-premium btn-primary-grad">
+                            <i className="fas fa-paper-plane"></i>
+                            Hire Me
+                        </Link>
+                        <a href="#" className="btn-premium btn-secondary-glass">
+                            <i className="fas fa-file-download"></i>
+                            See My Resume
+                        </a>
                     </div>
                 </div>
-            </section>
-
-            {/* Animated Section Divider */}
-            <div className="section-divider">
-                <div className="divider-line"></div>
-                <div className="divider-shapes">
-                    <div className="divider-shape shape-1"></div>
-                    <div className="divider-shape shape-2"></div>
-                    <div className="divider-shape shape-3"></div>
-                </div>
-                <div className="divider-line"></div>
-            </div>
-
-            {/* Featured Projects */}
-            <section style={{ marginTop: '5rem' }}>
-                <div className="section-title">
-                    <h2>projects</h2>
-                    <div className="section-line"></div>
-                    <Link to="/projects" className="cmd-link" style={{ fontSize: '1rem' }}>View all ~~&gt;</Link>
-                </div>
-                <div className="projects-grid">
-                    <div className="terminal-window">
-                        <div className="terminal-header">
-                            <span>[ _ □ X ]</span>
-                        </div>
-                        <div className="project-img-container">
-                            <img src={ribhanceImg} alt="RIBHANCE project" className="project-img" />
-                        </div>
-                        <div className="project-tech">&gt; stack: React Native, AI, ML</div>
-                        <div className="project-info">
-                            <h3>RIBHANCE</h3>
-                            <p>An innovative application leveraging AI to transform photos into artistic sketches...</p>
-                        </div>
+                <div className="hero-visual">
+                    <div className="hero-orb-container">
+                        <div className="hero-orb"></div>
+                        <img src={globaliaSoftBlogImg} alt="Premium hacker illustration" className="hero-img" />
                     </div>
-
-                    <div className="terminal-window">
-                        <div className="terminal-header">
-                            <span>[ _ □ X ]</span>
-                        </div>
-                        <div className="project-img-container">
-                            <img src={portfolioImg} alt="Portfolio project" className="project-img" />
-                        </div>
-                        <div className="project-tech">&gt; stack: Vite, React, CSS3</div>
-                        <div className="project-info">
-                            <h3>Personal Portfolio</h3>
-                            <p>My custom developer space built with modern aesthetics and performance...</p>
-                        </div>
+                    <div className="status-box-new">
+                        <div className="pulse-dot"></div>
+                        <span>Status: <strong style={{ color: '#ff6b6b' }}>Actively Developing</strong></span>
                     </div>
                 </div>
             </section>
 
-            {/* Animated Section Divider */}
-            <div className="section-divider">
-                <div className="divider-line"></div>
-                <div className="divider-waves">
-                    <div className="divider-wave wave-1"></div>
-                    <div className="divider-wave wave-2"></div>
-                    <div className="divider-wave wave-3"></div>
-                </div>
-                <div className="divider-line"></div>
-            </div>
-
-            {/* Skills Snippet */}
-            <section style={{ marginTop: '5rem' }}>
+            {/* Experience Timeline */}
+            <section className="reveal">
                 <div className="section-title">
-                    <h2>skills</h2>
+                    <h2>&gt; my_journey</h2>
                     <div className="section-line"></div>
                 </div>
-                <div style={{ display: 'grid', gridTemplateColumns: 'auto 1fr', gap: '4rem', alignItems: 'center' }}>
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '2rem' }}>
-                        <div className="dot-pattern">
-                            {[...Array(20)].map((_, i) => <div key={i} className="dot"></div>)}
-                        </div>
-                        <div style={{ border: '2px solid var(--border-gray)', width: '80px', height: '80px' }}></div>
-                        <div style={{ border: '2px solid var(--accent-purple)', width: '60px', height: '60px', marginLeft: 'auto' }}></div>
-                        <div className="dot-pattern">
-                            {[...Array(20)].map((_, i) => <div key={i} className="dot"></div>)}
+                <div className="timeline-container">
+                    <div className="timeline-line"></div>
+
+                    <div className="timeline-item">
+                        <div className="timeline-dot"></div>
+                        <div className="timeline-card">
+                            <span className="timeline-date">CURRENT</span>
+                            <h3>Developer Intern</h3>
+                            <p className="timeline-location">Tech Industry</p>
+                            <p>Developing high-performance web applications and mastering modern tech stacks in a professional environment.</p>
                         </div>
                     </div>
-                    <div className="skills-container" style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem', justifyContent: 'flex-start' }}>
-                        <div className="skill-box" style={{ flex: '1 1 150px' }}>
-                            <div className="skill-header">Languages</div>
-                            <div className="skill-list">JS TS Python</div>
-                        </div>
-                        <div className="skill-box" style={{ flex: '1 1 150px' }}>
-                            <div className="skill-header">Frameworks</div>
-                            <div className="skill-list">React Native Express</div>
-                        </div>
-                        <div className="skill-box" style={{ flex: '1 1 150px' }}>
-                            <div className="skill-header">Tools</div>
-                            <div className="skill-list">Git Linux VSCode</div>
+
+                    <div className="timeline-item">
+                        <div className="timeline-dot"></div>
+                        <div className="timeline-card">
+                            <span className="timeline-date">COMPLETED</span>
+                            <h3>Diploma in Computer Engineering</h3>
+                            <p className="timeline-location">Academic Excellence</p>
+                            <p>Deep-diving into fundamental computer science principles, database management (SQL/DBMS), and software architecture.</p>
                         </div>
                     </div>
                 </div>
             </section>
 
-            {/* Animated Section Divider */}
-            <div className="section-divider">
-                <div className="divider-line"></div>
-                <div className="divider-grid">
-                    {[...Array(8)].map((_, i) => (
-                        <div key={i} className="divider-grid-item" style={{ animationDelay: `${i * 0.1}s` }}></div>
+            {/* AI & Tech Hub */}
+            <section className="reveal">
+                <div className="section-title">
+                    <h2>&gt; stack_expertise</h2>
+                    <div className="section-line"></div>
+                </div>
+                <div className="expertise-intro">
+                    <p>Proficient in building scalable front-ends, custom WordPress solutions, and mobile applications via Android Studio.</p>
+                </div>
+
+                <div className="tech-grid">
+                    {[
+                        { name: 'React', icon: 'fab fa-react' },
+                        { name: 'WordPress', icon: 'fab fa-wordpress' },
+                        { name: 'JavaScript', icon: 'fab fa-js' },
+                        { name: 'HTML5/CSS3', icon: 'fab fa-html5' },
+                        { name: 'SQL/DBMS', icon: 'fas fa-database' },
+                        { name: 'Git', icon: 'fab fa-git-alt' },
+                        { name: 'Android', icon: 'fab fa-android' },
+                        { name: 'VS Code', icon: 'fas fa-code' }
+                    ].map(tech => (
+                        <div key={tech.name} className="tech-card">
+                            <i className={`${tech.icon} tech-icon`}></i>
+                            <div className="tech-name">{tech.name}</div>
+                        </div>
                     ))}
                 </div>
-                <div className="divider-line"></div>
-            </div>
 
-            {/* About Snippet */}
-            <section style={{ marginTop: '5rem', marginBottom: '5rem' }}>
+                <div className="ai-highlight-card reveal">
+                    <div className="ai-icon-group">
+                        <i className="fas fa-brain ai-main-icon"></i>
+                        <div className="ai-rings">
+                            <div className="ai-ring"></div>
+                            <div className="ai-ring"></div>
+                        </div>
+                    </div>
+                    <div className="ai-text">
+                        <h3>AI & Prompt Engineering Specialist</h3>
+                        <p>Leveraging tools like <strong>Antigravity, Cursor, and Windsurf</strong> to accelerate development by 300%. Master of prompt design and AI-assisted workflows.</p>
+                    </div>
+                </div>
+            </section>
+
+            {/* Development Process */}
+            <section className="reveal">
                 <div className="section-title">
-                    <h2>about-me</h2>
+                    <h2>&gt; development_process</h2>
                     <div className="section-line"></div>
                 </div>
-                <div className="about-content">
-                    <div style={{ flex: 1.2 }}>
-                        <p style={{ color: 'var(--text-gray)', marginBottom: '1.5rem' }}>Hello, i'm Bhanusai!</p>
-                        <p style={{ color: 'var(--text-gray)', marginBottom: '1.5rem' }}>
-                            I'm a self-taught front-end developer based in India. I can develop responsive
-                            websites from scratch and raise them into modern user-friendly web experiences.
-                        </p>
-                        <Link to="/about" className="btn-outline">Read more -&gt;</Link>
-                    </div>
-                    <div style={{ position: 'relative', flex: 0.8 }}>
-                        <img src={hackerMe} alt="Bhanusai" style={{ width: '100%', zIndex: 2, position: 'relative' }} />
-                        <div className="dot-pattern" style={{ position: 'absolute', top: '10%', left: '-20px', zIndex: 1 }}>
-                            {[...Array(25)].map((_, i) => <div key={i} className="dot"></div>)}
+                <div className="process-grid">
+                    {[
+                        { num: '01', title: 'Discovery', icon: 'fas fa-search', desc: 'Analyzing requirements and defining the core architectural vision.' },
+                        { num: '02', title: 'Strategy', icon: 'fas fa-drafting-pencil', desc: 'Designing responsive layouts and user-centric interaction flows.' },
+                        { num: '03', title: 'Execution', icon: 'fas fa-terminal', desc: 'Rapid development with AI-assisted precision and clean code.' },
+                        { num: '04', title: 'Uplink', icon: 'fas fa-rocket', desc: 'Deployment and optimization for maximum performance and impact.' }
+                    ].map(step => (
+                        <div key={step.num} className="process-step gradient-border-item">
+                            <div className="step-number">{step.num}</div>
+                            <i className={`${step.icon} step-icon`}></i>
+                            <h3>{step.title}</h3>
+                            <p>{step.desc}</p>
                         </div>
-                        <div className="dot-pattern" style={{ position: 'absolute', bottom: '10%', right: '10px', zIndex: 1 }}>
-                            {[...Array(25)].map((_, i) => <div key={i} className="dot"></div>)}
+                    ))}
+                </div>
+            </section>
+
+            {/* Featured Projects / App Showcase */}
+            <section className="reveal">
+                <div className="section-title">
+                    <h2>&gt; core_projects</h2>
+                    <div className="section-line"></div>
+                    <Link to="/projects" className="cmd-link">VIEW_ALL ~~&gt;</Link>
+                </div>
+
+                <div className="projects-featured">
+                    <div className="app-showcase-split">
+                        <div className="app-mockup-wrap">
+                            <div className="app-mockup">
+                                <img src={ribhanceImg} alt="RIBHANCE APP" className="mockup-img" />
+                            </div>
+                        </div>
+                        <div className="app-details">
+                            <div className="tag-ai">AI MOBILE APP</div>
+                            <h3>RIBHANCE</h3>
+                            <p>Developed with Android Studio, this app uses machine learning to transform real-world photos into high-fidelity artistic sketches. A perfect blend of mobile dev and AI.</p>
+                            <div className="app-stats">
+                                <span><i className="fas fa-bolt"></i> ML Core</span>
+                                <span><i className="fas fa-mobile-alt"></i> Native Android</span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </section>
-        </>
+
+            {/* Final CTA */}
+            <section className="final-cta reveal">
+                <div className="cta-glass-card">
+                    <h2>Ready to start a project?</h2>
+                    <p>I'm currently available for freelance work and intern opportunities.</p>
+                    <div className="cta-btns">
+                        <Link to="/contacts" className="btn-premium btn-primary-grad">Let's Connect</Link>
+                        <Link to="/about" className="btn-premium btn-secondary-glass">More About Me</Link>
+                    </div>
+                </div>
+            </section>
+        </div>
     )
 }
 
-export default Home
+export default Home;

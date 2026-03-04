@@ -6,71 +6,71 @@ const Skills = () => {
 
     const skillsData = [
         {
-            category: 'Languages',
-            icon: '💻',
-            skills: [
-                { name: 'JavaScript', level: 90, color: '#ff6b6b' },
-                { name: 'TypeScript', level: 85, color: '#4ecdc4' },
-                { name: 'Python', level: 75, color: '#45b7d1' }
-            ]
-        },
-        {
-            category: 'Frameworks',
+            category: 'Frontend',
             icon: '⚛️',
             skills: [
-                { name: 'React', level: 95, color: '#ff6b6b' },
-                { name: 'React Native', level: 80, color: '#4ecdc4' },
-                { name: 'Express', level: 85, color: '#45b7d1' },
-                { name: 'Vite', level: 88, color: '#ff6b6b' }
+                { name: 'React', level: 95, color: '#4ecdc4' },
+                { name: 'WordPress', level: 90, color: '#ff6b6b' },
+                { name: 'HTML/CSS', level: 93, color: '#45b7d1' },
+                { name: 'JavaScript', level: 90, color: '#ff6b6b' }
             ]
         },
         {
-            category: 'Databases',
+            category: 'Backend & DB',
             icon: '🗄️',
             skills: [
-                { name: 'MongoDB', level: 82, color: '#4ecdc4' },
-                { name: 'PostgreSQL', level: 78, color: '#45b7d1' },
-                { name: 'SQLite', level: 85, color: '#ff6b6b' }
+                { name: 'SQL', level: 85, color: '#4ecdc4' },
+                { name: 'DBMS', level: 80, color: '#45b7d1' },
+                { name: 'REST API', level: 88, color: '#ff6b6b' }
             ]
         },
         {
-            category: 'Tools & Others',
+            category: 'AI Tools',
+            icon: '🤖',
+            skills: [
+                { name: 'Antigravity', level: 95, color: '#ff6b6b' },
+                { name: 'Cursor', level: 95, color: '#4ecdc4' },
+                { name: 'Windsurf', level: 92, color: '#45b7d1' },
+                { name: 'AI Prompting', level: 98, color: '#ff6b6b' }
+            ]
+        },
+        {
+            category: 'Dev Tools',
             icon: '🛠️',
             skills: [
-                { name: 'Git/GitHub', level: 92, color: '#ff6b6b' },
-                { name: 'VS Code', level: 95, color: '#4ecdc4' },
-                { name: 'HTML/CSS', level: 93, color: '#45b7d1' },
-                { name: 'REST API', level: 88, color: '#ff6b6b' }
+                { name: 'Git', level: 92, color: '#4ecdc4' },
+                { name: 'VS Code', level: 95, color: '#45b7d1' },
+                { name: 'Android Studio', level: 82, color: '#ff6b6b' }
             ]
         }
     ];
 
-    const filteredSkills = selectedCategory === 'all' 
-        ? skillsData 
+    const filteredSkills = selectedCategory === 'all'
+        ? skillsData
         : skillsData.filter(cat => cat.category === selectedCategory);
 
     return (
-        <section id="skills">
+        <section id="skills" className="reveal">
             <div className="section-title">
-                <h2>technical <span>skills</span></h2>
+                <h2>&gt; arsenal_parameters</h2>
                 <div className="section-line"></div>
             </div>
 
             {/* Interactive Category Filter */}
             <div className="skill-filters">
-                <button 
+                <button
                     className={`filter-btn ${selectedCategory === 'all' ? 'active' : ''}`}
                     onClick={() => setSelectedCategory('all')}
                 >
-                    All Skills
+                    &gt; ALL_MODULES
                 </button>
                 {skillsData.map((category) => (
-                    <button 
+                    <button
                         key={category.category}
                         className={`filter-btn ${selectedCategory === category.category ? 'active' : ''}`}
                         onClick={() => setSelectedCategory(category.category)}
                     >
-                        {category.icon} {category.category}
+                        {category.icon} {category.category.toUpperCase()}
                     </button>
                 ))}
             </div>
@@ -78,23 +78,25 @@ const Skills = () => {
             {/* 3D Skills Showcase */}
             <div className="skills-showcase">
                 {filteredSkills.map((category, categoryIndex) => (
-                    <div key={category.category} className="skill-category">
+                    <div key={category.category} className="skill-category reveal">
                         <div className="category-header">
                             <span className="category-icon">{category.icon}</span>
                             <h3>{category.category}</h3>
+                            <div className="header-decoration"></div>
                         </div>
-                        
+
                         <div className="skills-grid">
                             {category.skills.map((skill, skillIndex) => (
-                                <div 
+                                <div
                                     key={skill.name}
                                     className={`skill-card ${hoveredSkill === `${categoryIndex}-${skillIndex}` ? 'hovered' : ''}`}
                                     onMouseEnter={() => setHoveredSkill(`${categoryIndex}-${skillIndex}`)}
                                     onMouseLeave={() => setHoveredSkill(null)}
-                                    style={{ 
-                                        animationDelay: `${(categoryIndex * 0.1 + skillIndex * 0.05)}s` 
+                                    style={{
+                                        animationDelay: `${(categoryIndex * 0.1 + skillIndex * 0.05)}s`
                                     }}
                                 >
+                                    <div className="skill-gradient-border"></div>
                                     <div className="skill-ring">
                                         <svg className="progress-ring" viewBox="0 0 120 120">
                                             <circle
@@ -103,8 +105,8 @@ const Skills = () => {
                                                 cy="60"
                                                 r="54"
                                                 fill="none"
-                                                stroke="rgba(255,255,255,0.1)"
-                                                strokeWidth="8"
+                                                stroke="rgba(255,255,255,0.05)"
+                                                strokeWidth="4"
                                             />
                                             <circle
                                                 className="progress-ring-fill"
@@ -113,13 +115,14 @@ const Skills = () => {
                                                 r="54"
                                                 fill="none"
                                                 stroke={skill.color}
-                                                strokeWidth="8"
+                                                strokeWidth="6"
                                                 strokeLinecap="round"
                                                 strokeDasharray={`${2 * Math.PI * 54}`}
                                                 strokeDashoffset={`${2 * Math.PI * 54 * (1 - skill.level / 100)}`}
                                                 style={{
                                                     transform: 'rotate(-90deg)',
-                                                    transformOrigin: '60px 60px'
+                                                    transformOrigin: '60px 60px',
+                                                    filter: `drop-shadow(0 0 8px ${skill.color})`
                                                 }}
                                             />
                                         </svg>
@@ -127,15 +130,16 @@ const Skills = () => {
                                             <span>{skill.level}%</span>
                                         </div>
                                     </div>
-                                    
+
                                     <div className="skill-info">
                                         <h4>{skill.name}</h4>
                                         <div className="skill-bar">
-                                            <div 
+                                            <div
                                                 className="skill-progress"
-                                                style={{ 
+                                                style={{
                                                     width: `${skill.level}%`,
-                                                    backgroundColor: skill.color 
+                                                    backgroundColor: skill.color,
+                                                    boxShadow: `0 0 15px ${skill.color}44`
                                                 }}
                                             ></div>
                                         </div>
@@ -149,8 +153,8 @@ const Skills = () => {
 
             {/* Floating Skill Orbs */}
             <div className="floating-skills">
-                {['React', 'JavaScript', 'Python', 'Node.js', 'TypeScript'].map((skill, index) => (
-                    <div 
+                {['React', 'AI Tools', 'SQL', 'WordPress', 'Git'].map((skill, index) => (
+                    <div
                         key={skill}
                         className="floating-skill-orb"
                         style={{
@@ -167,4 +171,4 @@ const Skills = () => {
     )
 }
 
-export default Skills
+export default Skills;

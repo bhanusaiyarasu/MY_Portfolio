@@ -2,85 +2,89 @@ import React from 'react'
 
 const Contacts = () => {
     return (
-        <section id="contacts">
+        <section id="contacts" className="contacts-section">
             <div className="section-title">
-                <h2>contacts</h2>
-                <div className="section-line" style={{ maxWidth: '300px' }}></div>
+                <h2>&gt; connect_to_network</h2>
+                <div className="section-line"></div>
             </div>
 
-            <p style={{ color: 'var(--text-gray)', maxWidth: '600px', marginBottom: '3rem', fontSize: '1.1rem' }}>
-                I'm currently open to new freelance opportunities and exciting projects.
-                Whether you have a specific request or just want to say hi, my inbox is always open!
-            </p>
-
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4rem', alignItems: 'stretch' }}>
-
-                {/* Contact Form Terminal Style */}
-                <div className="terminal-window" style={{ display: 'flex' }}>
+            <div className="neural-contact-container">
+                {/* Main Terminal Window */}
+                <div className="terminal-glass">
+                    <div className="scanline"></div>
                     <div className="terminal-header">
-                        <span>[ new_message.exe - X ]</span>
+                        <div className="terminal-title">
+                            <i className="fas fa-terminal"></i>
+                            <span>SSH: bhanusai@portfolio ~ % </span>
+                        </div>
+                        <div className="terminal-controls">
+                            <div className="control-dot red"></div>
+                            <div className="control-dot yellow"></div>
+                            <div className="control-dot green"></div>
+                        </div>
                     </div>
-                    <form style={{ padding: '2rem', display: 'flex', flexDirection: 'column', gap: '1.5rem', flexGrow: 1 }}>
-                        <div style={{ display: 'flex', gap: '1rem' }}>
-                            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                                <label style={{ color: 'var(--text-gray)', fontSize: '0.9rem', fontFamily: 'monospace' }}>&gt; name:</label>
-                                <input type="text" placeholder="_" style={{ background: 'rgba(0,0,0,0.2)', border: '1px solid var(--border-gray)', padding: '0.8rem', color: 'var(--text-white)', outline: 'none', fontFamily: 'monospace' }} />
-                            </div>
-                            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                                <label style={{ color: 'var(--text-gray)', fontSize: '0.9rem', fontFamily: 'monospace' }}>&gt; email:</label>
-                                <input type="email" placeholder="_" style={{ background: 'rgba(0,0,0,0.2)', border: '1px solid var(--border-gray)', padding: '0.8rem', color: 'var(--text-white)', outline: 'none', fontFamily: 'monospace' }} />
-                            </div>
-                        </div>
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', flexGrow: 1 }}>
-                            <label style={{ color: 'var(--text-gray)', fontSize: '0.9rem', fontFamily: 'monospace' }}>&gt; message:</label>
-                            <textarea placeholder="Type your message here..." style={{ background: 'rgba(0,0,0,0.2)', border: '1px solid var(--border-gray)', padding: '0.8rem', color: 'var(--text-white)', minHeight: '150px', outline: 'none', resize: 'vertical', fontFamily: 'monospace', flexGrow: 1 }}></textarea>
-                        </div>
-                        <button type="button" className="btn-outline" style={{ alignSelf: 'flex-start', background: 'transparent', cursor: 'pointer', fontFamily: 'monospace' }}>
-                            [ SEND_DATA ]
-                        </button>
-                    </form>
-                </div>
 
-                {/* Direct Contact Cards */}
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
-                    <div className="terminal-window" style={{ background: 'rgba(0,0,0,0.2)' }}>
-                        <div style={{ padding: '2rem' }}>
-                            <h4 style={{ marginBottom: '1.5rem', color: 'var(--accent-purple)', fontSize: '1.2rem' }}>&gt; Direct_Comms</h4>
-                            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.2rem' }}>
-                                <a href="mailto:bhanusaiyarasu@gmail.com" style={{ display: 'flex', alignItems: 'center', gap: '1rem', color: 'var(--text-gray)', textDecoration: 'none', padding: '1rem', border: '1px solid var(--border-gray)', transition: 'all 0.3s ease' }} className="contact-link-hover">
-                                    <i className="fas fa-envelope" style={{ fontSize: '1.5rem', color: 'var(--accent-purple)' }}></i>
-                                    <span style={{ fontFamily: 'monospace' }}>bhanusaiyarasu@gmail.com</span>
-                                </a>
-                                <a href="https://www.linkedin.com/in/bhanu-sai-yarasu-9a8591357" target="_blank" rel="noreferrer" style={{ display: 'flex', alignItems: 'center', gap: '1rem', color: 'var(--text-gray)', textDecoration: 'none', padding: '1rem', border: '1px solid var(--border-gray)', transition: 'all 0.3s ease' }} className="contact-link-hover">
-                                    <i className="fab fa-linkedin" style={{ fontSize: '1.5rem', color: 'var(--accent-purple)' }}></i>
-                                    <span style={{ fontFamily: 'monospace' }}>Bhanu Sai Yarasu</span>
-                                </a>
-                                <a href="https://github.com/bhanusaiyarasu" target="_blank" rel="noreferrer" style={{ display: 'flex', alignItems: 'center', gap: '1rem', color: 'var(--text-gray)', textDecoration: 'none', padding: '1rem', border: '1px solid var(--border-gray)', transition: 'all 0.3s ease' }} className="contact-link-hover">
-                                    <i className="fab fa-github" style={{ fontSize: '1.5rem', color: 'var(--accent-purple)' }}></i>
-                                    <span style={{ fontFamily: 'monospace' }}>bhanusaiyarasu</span>
-                                </a>
+                    <div className="terminal-content">
+                        <form className="terminal-form">
+                            <div className="terminal-input-wrap">
+                                <span className="terminal-prompt">$ input_name:</span>
+                                <input type="text" className="terminal-field" placeholder="guest_user" />
+                                <div className="terminal-cursor"></div>
                             </div>
-                        </div>
+
+                            <div className="terminal-input-wrap">
+                                <span className="terminal-prompt">$ input_email:</span>
+                                <input type="email" className="terminal-field" placeholder="user@remote.host" />
+                            </div>
+
+                            <div className="terminal-input-wrap">
+                                <span className="terminal-prompt">$ input_message:</span>
+                                <textarea className="terminal-field" rows="4" placeholder="Type your transmission here..."></textarea>
+                            </div>
+
+                            <button type="button" className="neural-send-btn">
+                                <i className="fas fa-satellite-dish"></i>
+                                <span>BROADCAST_TRANSMISSION</span>
+                            </button>
+                        </form>
                     </div>
                 </div>
 
+                {/* Satellite Hub / Contact Info */}
+                <div className="contact-sidebar">
+                    <div className="terminal-glass" style={{ marginBottom: '2rem' }}>
+                        <div className="terminal-content" style={{ padding: '1.5rem' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', color: 'var(--accent-primary)', marginBottom: '1rem' }}>
+                                <div className="orb-glow" style={{ width: '15px', height: '15px' }}></div>
+                                <span style={{ fontFamily: 'Fira Code', fontSize: '0.8rem' }}>UPLINK_STATUS: ACTIVE</span>
+                            </div>
+                            <div className="contact-info-list">
+                                <a href="mailto:bhanusaiyarasu@gmail.com" className="info-item">
+                                    <div className="info-icon"><i className="fas fa-envelope"></i></div>
+                                    <div className="info-text">
+                                        <span className="info-label">MAIL_PROTOCOL</span>
+                                        <span className="info-value">bhanusaiyarasu@gmail.com</span>
+                                    </div>
+                                </a>
+                                <a href="https://linkedin.com/in/bhanu-sai-yarasu-9a8591357" target="_blank" rel="noreferrer" className="info-item">
+                                    <div className="info-icon"><i className="fab fa-linkedin"></i></div>
+                                    <div className="info-text">
+                                        <span className="info-label">LINKEDIN_SYNC</span>
+                                        <span className="info-value">Bhanu Sai Yarasu</span>
+                                    </div>
+                                </a>
+                                <a href="https://github.com/bhanusaiyarasu" target="_blank" rel="noreferrer" className="info-item">
+                                    <div className="info-icon"><i className="fab fa-github"></i></div>
+                                    <div className="info-text">
+                                        <span className="info-label">GITHUB_REPO</span>
+                                        <span className="info-value">bhanusaiyarasu</span>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-
-            {/* Inline CSS for the hover effect specifically for this page */}
-            <style jsx>{`
-                .contact-link-hover:hover {
-                    border-color: var(--accent-purple) !important;
-                    background: rgba(199, 120, 221, 0.1) !important;
-                    color: var(--text-white) !important;
-                    transform: translateX(10px);
-                }
-                
-                @media (max-width: 768px) {
-                    #contacts > div:nth-child(3) {
-                        grid-template-columns: 1fr !important;
-                    }
-                }
-            `}</style>
         </section>
     )
 }
