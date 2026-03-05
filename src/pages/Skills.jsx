@@ -1,8 +1,21 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 const Skills = () => {
     const [selectedCategory, setSelectedCategory] = useState('all');
     const [hoveredSkill, setHoveredSkill] = useState(null);
+
+    useEffect(() => {
+        const observerOptions = { threshold: 0.2 };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+        return () => observer.disconnect();
+    }, []);
 
     const skillsData = [
         {
@@ -118,11 +131,11 @@ const Skills = () => {
                                                 strokeWidth="6"
                                                 strokeLinecap="round"
                                                 strokeDasharray={`${2 * Math.PI * 54}`}
-                                                strokeDashoffset={`${2 * Math.PI * 54 * (1 - skill.level / 100)}`}
                                                 style={{
                                                     transform: 'rotate(-90deg)',
                                                     transformOrigin: '60px 60px',
-                                                    filter: `drop-shadow(0 0 8px ${skill.color})`
+                                                    filter: `drop-shadow(0 0 8px ${skill.color})`,
+                                                    strokeDashoffset: `calc(339.292 * (1 - ${skill.level} / 100))`
                                                 }}
                                             />
                                         </svg>
@@ -137,6 +150,7 @@ const Skills = () => {
                                             <div
                                                 className="skill-progress"
                                                 style={{
+                                                    '--target-width': `${skill.level}%`,
                                                     width: `${skill.level}%`,
                                                     backgroundColor: skill.color,
                                                     boxShadow: `0 0 15px ${skill.color}44`

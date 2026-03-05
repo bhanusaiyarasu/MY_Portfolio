@@ -8,8 +8,24 @@ import globaliaSoftBlogImg from '../assets/Globaliasoft-Way-to-Become-a-Web-Deve
 
 
 const Home = () => {
+    const [typedTitle, setTypedTitle] = React.useState('');
+    const [isDone, setIsDone] = React.useState(false);
+    const fullTitle = 'Computer Engineer & Developer Intern';
+
     // Add Scroll Reveal effect on mount
     React.useEffect(() => {
+        // Typewriter logic
+        let i = 0;
+        const interval = setInterval(() => {
+            setTypedTitle(fullTitle.slice(0, i));
+            i++;
+            if (i > fullTitle.length) {
+                clearInterval(interval);
+                // Wait a bit then hide cursor
+                setTimeout(() => setIsDone(true), 1000);
+            }
+        }, 60);
+
         const observerOptions = {
             threshold: 0.1
         };
@@ -24,36 +40,10 @@ const Home = () => {
 
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-        return () => observer.disconnect();
-    }, []);
-
-    // Horizontal Scroll Logic for Process Section
-    const processWrapRef = React.useRef(null);
-    const processInnerRef = React.useRef(null);
-
-    React.useEffect(() => {
-        const handleScroll = () => {
-            if (!processWrapRef.current || !processInnerRef.current) return;
-            const wrap = processWrapRef.current;
-            const inner = processInnerRef.current;
-
-            const rect = wrap.getBoundingClientRect();
-            // Scroll progress from 0 to 1 based on section's completely visible track
-            const scrollDistance = rect.height - window.innerHeight;
-            let progress = -rect.top / scrollDistance;
-
-            if (progress < 0) progress = 0;
-            if (progress > 1) progress = 1;
-
-            // Calculate max horizontal scroll
-            const maxScroll = inner.scrollWidth - window.innerWidth + 100; // 100px padding Right
-            inner.style.transform = `translateX(-${progress * maxScroll}px)`;
+        return () => {
+            observer.disconnect();
+            clearInterval(interval);
         };
-
-        window.addEventListener('scroll', handleScroll, { passive: true });
-        // Initial setup
-        setTimeout(handleScroll, 100);
-        return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
     return (
@@ -64,8 +54,14 @@ const Home = () => {
                     <div className="badge-premium">UPLINK_ESTABLISHED</div>
                     <h1 className="hero-title">
                         Bhanusai <br />
-                        <span>Computer Engineer</span> & <br />
-                        <span className="grad-text">Developer Intern</span>
+                        <span>{typedTitle.substring(0, 20)}</span>
+                        {typedTitle.length >= 20 && (
+                            <>
+                                <br />
+                                <span className="grad-text">{typedTitle.substring(20)}</span>
+                            </>
+                        )}
+                        {!isDone && <span className="typewriter-cursor"></span>}
                     </h1>
                     <p className="hero-desc">
                         Passionate developer specializing in <span className="highlight">React, WordPress, and Android</span>.
@@ -168,30 +164,26 @@ const Home = () => {
                 </div>
             </section>
 
-            {/* Development Process - Sticky Horizontal Scroll */}
-            <section className="process-scroll-wrapper" ref={processWrapRef} style={{ height: '300vh', position: 'relative' }}>
-                <div className="process-sticky-container" style={{ position: 'sticky', top: 0, height: '100vh', display: 'flex', alignItems: 'center', overflow: 'hidden' }}>
-                    <div className="process-horizontal-track" ref={processInnerRef} style={{ display: 'flex', alignItems: 'center', gap: '4rem', padding: '0 5vw', width: 'max-content', willChange: 'transform' }}>
-                        <div className="section-title" style={{ minWidth: '350px', margin: 0 }}>
-                            <h2>&gt; development_process</h2>
-                            <div className="section-line"></div>
+            {/* Development Process - Grid Layout */}
+            <section className="reveal">
+                <div className="section-title">
+                    <h2>&gt; development_process</h2>
+                    <div className="section-line"></div>
+                </div>
+                <div className="process-grid">
+                    {[
+                        { num: '01', title: 'Discovery', icon: 'fas fa-search', desc: 'Analyzing requirements and defining the core architectural vision.' },
+                        { num: '02', title: 'Strategy', icon: 'fas fa-drafting-compass', desc: 'Designing responsive layouts and user-centric interaction flows.' },
+                        { num: '03', title: 'Execution', icon: 'fas fa-terminal', desc: 'Rapid development with AI-assisted precision and clean code.' },
+                        { num: '04', title: 'Uplink', icon: 'fas fa-rocket', desc: 'Deployment and optimization for maximum performance and impact.' }
+                    ].map(step => (
+                        <div key={step.num} className="process-step">
+                            <div className="step-number">{step.num}</div>
+                            <i className={`${step.icon} step-icon`}></i>
+                            <h3>{step.title}</h3>
+                            <p>{step.desc}</p>
                         </div>
-                        <div className="process-grid-horizontal" style={{ display: 'flex', gap: '3rem' }}>
-                            {[
-                                { num: '01', title: 'Discovery', icon: 'fas fa-search', desc: 'Analyzing requirements and defining the core architectural vision.' },
-                                { num: '02', title: 'Strategy', icon: 'fas fa-drafting-pencil', desc: 'Designing responsive layouts and user-centric interaction flows.' },
-                                { num: '03', title: 'Execution', icon: 'fas fa-terminal', desc: 'Rapid development with AI-assisted precision and clean code.' },
-                                { num: '04', title: 'Uplink', icon: 'fas fa-rocket', desc: 'Deployment and optimization for maximum performance and impact.' }
-                            ].map(step => (
-                                <div key={step.num} className="process-step gradient-border-item" style={{ minWidth: '320px', flex: '0 0 auto' }}>
-                                    <div className="step-number">{step.num}</div>
-                                    <i className={`${step.icon} step-icon`}></i>
-                                    <h3>{step.title}</h3>
-                                    <p>{step.desc}</p>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
+                    ))}
                 </div>
             </section>
 
