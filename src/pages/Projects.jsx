@@ -6,14 +6,26 @@ const Projects = () => {
     const [selectedProject, setSelectedProject] = useState(null);
     const [activeFilter, setActiveFilter] = useState('all');
     const [hoveredId, setHoveredId] = useState(null);
+    const [revealedIds, setRevealedIds] = useState(new Set());
 
     useEffect(() => {
         const observerOptions = { threshold: 0.1 };
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                if (entry.isIntersecting) entry.target.classList.add('active');
+                if (entry.isIntersecting) {
+                    const id = entry.target.getAttribute('data-reveal-id');
+                    if (id) {
+                        setRevealedIds(prev => {
+                            if (prev.has(id)) return prev;
+                            const next = new Set(prev);
+                            next.add(id);
+                            return next;
+                        });
+                    }
+                }
             });
         }, observerOptions);
+
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
         return () => observer.disconnect();
     }, []);
@@ -56,13 +68,19 @@ const Projects = () => {
     return (
         <section id="projects" className="projects-section-wrap">
             {/* Section Header */}
-            <div className="section-title reveal">
+            <div
+                className={`section-title reveal ${revealedIds.has('proj-title') ? 'active' : ''}`}
+                data-reveal-id="proj-title"
+            >
                 <h2>&gt; project_vault</h2>
                 <div className="section-line"></div>
             </div>
 
             {/* Filter Pills */}
-            <div className="proj-filters reveal">
+            <div
+                className={`proj-filters reveal ${revealedIds.has('proj-filters') ? 'active' : ''}`}
+                data-reveal-id="proj-filters"
+            >
                 {filters.map(f => (
                     <button
                         key={f.value}
@@ -79,7 +97,8 @@ const Projects = () => {
                 {filtered.map((proj, idx) => (
                     <div
                         key={proj.id}
-                        className={`proj-showcase-card reveal ${hoveredId === proj.id ? 'is-hovered' : ''}`}
+                        data-reveal-id={`proj-${proj.id}`}
+                        className={`proj-showcase-card reveal ${revealedIds.has(`proj-${proj.id}`) ? 'active' : ''} ${hoveredId === proj.id ? 'is-hovered' : ''}`}
                         style={{ animationDelay: `${idx * 0.15}s`, '--card-accent': proj.color }}
                         onMouseEnter={() => setHoveredId(proj.id)}
                         onMouseLeave={() => setHoveredId(null)}

@@ -10,6 +10,7 @@ import globaliaSoftBlogImg from '../assets/Globaliasoft-Way-to-Become-a-Web-Deve
 const Home = () => {
     const [typedTitle, setTypedTitle] = React.useState('');
     const [isDone, setIsDone] = React.useState(false);
+    const [revealedIds, setRevealedIds] = React.useState(new Set());
     const fullTitle = 'Computer Engineer & Developer Intern';
 
     // Add Scroll Reveal effect on mount
@@ -33,7 +34,15 @@ const Home = () => {
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
+                    const id = entry.target.getAttribute('data-reveal-id');
+                    if (id) {
+                        setRevealedIds(prev => {
+                            if (prev.has(id)) return prev;
+                            const next = new Set(prev);
+                            next.add(id);
+                            return next;
+                        });
+                    }
                 }
             });
         }, observerOptions);
@@ -49,7 +58,11 @@ const Home = () => {
     return (
         <div className="home-page-wrap">
             {/* Hero Section */}
-            <section id="home" className="hero reveal">
+            <section
+                id="home"
+                className={`hero reveal ${revealedIds.has('hero') ? 'active' : ''}`}
+                data-reveal-id="hero"
+            >
                 <div className="hero-text">
                     <div className="badge-premium">UPLINK_ESTABLISHED</div>
                     <h1 className="hero-title">
@@ -91,7 +104,10 @@ const Home = () => {
             </section>
 
             {/* Experience Timeline */}
-            <section className="reveal">
+            <section
+                className={`reveal ${revealedIds.has('journey') ? 'active' : ''}`}
+                data-reveal-id="journey"
+            >
                 <div className="section-title">
                     <h2>&gt; my_journey</h2>
                     <div className="section-line"></div>
@@ -122,7 +138,10 @@ const Home = () => {
             </section>
 
             {/* AI & Tech Hub */}
-            <section className="reveal">
+            <section
+                className={`reveal ${revealedIds.has('stack') ? 'active' : ''}`}
+                data-reveal-id="stack"
+            >
                 <div className="section-title">
                     <h2>&gt; stack_expertise</h2>
                     <div className="section-line"></div>
@@ -149,7 +168,10 @@ const Home = () => {
                     ))}
                 </div>
 
-                <div className="ai-highlight-card reveal">
+                <div
+                    className={`ai-highlight-card reveal ${revealedIds.has('ai-card') ? 'active' : ''}`}
+                    data-reveal-id="ai-card"
+                >
                     <div className="ai-icon-group">
                         <i className="fas fa-brain ai-main-icon"></i>
                         <div className="ai-rings">
@@ -165,7 +187,10 @@ const Home = () => {
             </section>
 
             {/* Development Process - Grid Layout */}
-            <section className="reveal">
+            <section
+                className={`reveal ${revealedIds.has('process') ? 'active' : ''}`}
+                data-reveal-id="process"
+            >
                 <div className="section-title">
                     <h2>&gt; development_process</h2>
                     <div className="section-line"></div>
@@ -188,7 +213,10 @@ const Home = () => {
             </section>
 
             {/* Featured Projects / App Showcase */}
-            <section className="reveal">
+            <section
+                className={`reveal ${revealedIds.has('featured') ? 'active' : ''}`}
+                data-reveal-id="featured"
+            >
                 <div className="section-title">
                     <h2>&gt; core_projects</h2>
                     <div className="section-line"></div>
@@ -216,7 +244,10 @@ const Home = () => {
             </section>
 
             {/* Final CTA */}
-            <section className="final-cta reveal">
+            <section
+                className={`final-cta reveal ${revealedIds.has('cta') ? 'active' : ''}`}
+                data-reveal-id="cta"
+            >
                 <div className="cta-glass-card">
                     <h2>Ready to start a project?</h2>
                     <p>I'm currently available for freelance work and intern opportunities.</p>

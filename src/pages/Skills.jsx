@@ -3,16 +3,26 @@ import React, { useState, useEffect } from 'react'
 const Skills = () => {
     const [selectedCategory, setSelectedCategory] = useState('all');
     const [hoveredSkill, setHoveredSkill] = useState(null);
+    const [revealedIds, setRevealedIds] = useState(new Set());
 
     useEffect(() => {
         const observerOptions = { threshold: 0.2 };
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
+                    const id = entry.target.getAttribute('data-reveal-id');
+                    if (id) {
+                        setRevealedIds(prev => {
+                            if (prev.has(id)) return prev;
+                            const next = new Set(prev);
+                            next.add(id);
+                            return next;
+                        });
+                    }
                 }
             });
         }, observerOptions);
+
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
         return () => observer.disconnect();
     }, []);
@@ -63,7 +73,11 @@ const Skills = () => {
         : skillsData.filter(cat => cat.category === selectedCategory);
 
     return (
-        <section id="skills" className="reveal">
+        <section
+            id="skills"
+            className={`reveal ${revealedIds.has('skills-main') ? 'active' : ''}`}
+            data-reveal-id="skills-main"
+        >
             <div className="section-title">
                 <h2>&gt; arsenal_parameters</h2>
                 <div className="section-line"></div>
@@ -91,14 +105,18 @@ const Skills = () => {
             {/* 3D Skills Showcase */}
             <div className="skills-showcase">
                 {filteredSkills.map((category, categoryIndex) => (
-                    <div key={category.category} className="skill-category reveal">
+                    <div
+                        key={category.category}
+                        className={`skill-category reveal ${revealedIds.has(`skill-cat-${categoryIndex}`) ? 'active' : ''}`}
+                        data-reveal-id={`skill-cat-${categoryIndex}`}
+                    >
                         <div className="category-header">
                             <span className="category-icon">{category.icon}</span>
                             <h3>{category.category}</h3>
                             <div className="header-decoration"></div>
                         </div>
 
-                        <div className="skills-grid">
+                        <div className="skills-grid" style={{ display: 'flex', flexWrap: 'wrap', gap: '15px' }}>
                             {category.skills.map((skill, skillIndex) => (
                                 <div
                                     key={skill.name}

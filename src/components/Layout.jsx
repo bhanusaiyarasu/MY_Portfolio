@@ -116,6 +116,15 @@ const Layout = ({ splashDone }) => {
         return () => window.removeEventListener('mousemove', handleMouseMove);
     }, []);
 
+    const navItems = [
+        { name: 'home', path: '/' },
+        { name: 'works', path: '/projects' },
+        { name: 'experience', path: '/experience' },
+        { name: 'skills', path: '/skills' },
+        { name: 'about', path: '/about' },
+        { name: 'contact', path: '/contacts' }
+    ];
+
     return (
         <div className={`app-container ${splashDone ? 'entrance-ready' : ''}`}>
             {/* Custom Cursor Glow Trail */}
@@ -201,6 +210,23 @@ const Layout = ({ splashDone }) => {
             <div className="portfolio-wrapper">
                 <div className="hacker-grid"></div>
 
+                {/* Mobile Navigation Overlay - Placed outside header to escape z-index and overflow clipping trap */}
+                <nav className={`premium-nav mobile-only-nav ${mobileMenuOpen ? 'mobile-active' : ''}`}>
+                    <div className="nav-wrapper">
+                        {navItems.map((item) => (
+                            <NavLink
+                                key={`mob-${item.name}`}
+                                to={item.path}
+                                className={({ isActive }) => `premium-nav-item ${isActive ? 'active' : ''}`}
+                                onClick={() => setMobileMenuOpen(false)}
+                            >
+                                <span className="nav-label">{item.name}</span>
+                                <div className="liquid-hover"></div>
+                            </NavLink>
+                        ))}
+                    </div>
+                </nav>
+
                 {/* Premium Interactive Header */}
                 <header className="premium-header">
                     <div className="system-pulse-line"></div>
@@ -229,15 +255,9 @@ const Layout = ({ splashDone }) => {
                         </div>
                     </div>
 
-                    <nav className="premium-nav">
+                    <nav className="premium-nav desktop-only-nav">
                         <div className="nav-wrapper">
-                            {[
-                                { name: 'home', path: '/' },
-                                { name: 'works', path: '/projects' },
-                                { name: 'skills', path: '/skills' },
-                                { name: 'about', path: '/about' },
-                                { name: 'contact', path: '/contacts' }
-                            ].map((item) => (
+                            {navItems.map((item) => (
                                 <NavLink
                                     key={item.name}
                                     to={item.path}
@@ -256,6 +276,15 @@ const Layout = ({ splashDone }) => {
                         <Link to="/contacts" className="premium-cta">
                             Let's Talk
                         </Link>
+                        <button
+                            className={`mobile-toggle ${mobileMenuOpen ? 'active' : ''}`}
+                            onClick={toggleMobileMenu}
+                            aria-label="Toggle Menu"
+                        >
+                            <div className="hamburger-box">
+                                <div className="hamburger-inner"></div>
+                            </div>
+                        </button>
                     </div>
                 </header>
 
@@ -270,64 +299,58 @@ const Layout = ({ splashDone }) => {
                     <div className="footer-glow-line"></div>
                     <div className="footer-grid">
                         <div className="footer-col footer-brand">
-                            <div className="footer-logo-wrap">
-                                <img src={logoImg} alt="" className="footer-logo-img" />
-                                <span className="footer-logo-text">Bhanusai</span>
+                            <div className="footer-logo-wrap" style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '1rem' }}>
+                                <img src={logoImg} alt="" className="footer-logo-img" style={{ height: '30px' }} />
+                                <span className="footer-logo-text" style={{ fontSize: '1.2rem', fontWeight: '700', letterSpacing: '2px' }}>BHANUSAI</span>
                             </div>
-                            <p className="footer-tagline">Web designer and front-end developer</p>
-                            <p className="footer-email">
-                                <i className="fas fa-envelope"></i>
-                                bhanusaiyarasu@gmail.com
-                            </p>
-                            <div className="footer-socials">
-                                <a href={socialLinks.github} target="_blank" rel="noreferrer" className="footer-social-icon">
+                            <p className="footer-tagline" style={{ fontSize: '0.8rem', opacity: '0.6', maxWidth: '200px' }}>Computer Engineer & Developer Intern crafting digital experiences.</p>
+                        </div>
+
+                        <div className="footer-col">
+                            <div className="footer-col-title">MODULES</div>
+                            <div className="footer-nav-links">
+                                <Link to="/" className="footer-link">HOME</Link>
+                                <Link to="/projects" className="footer-link">WORKS</Link>
+                                <Link to="/experience" className="footer-link">EXPERIENCE</Link>
+                                <Link to="/skills" className="footer-link">SKILLS</Link>
+                            </div>
+                        </div>
+
+                        <div className="footer-col">
+                            <div className="footer-col-title">SYSTEM_STATUS</div>
+                            <div className="footer-stats">
+                                <div className="footer-stat-row">
+                                    <span className="label">Uptime:</span>
+                                    <span className="value">99.9%</span>
+                                </div>
+                                <div className="footer-stat-row">
+                                    <span className="label">Sync:</span>
+                                    <span className="value">{currentTime}</span>
+                                </div>
+                                <div className="footer-stat-row">
+                                    <span className="label">Network:</span>
+                                    <span className="value">Uplink Active</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="footer-col">
+                            <div className="footer-col-title">SOCIAL_SYNC</div>
+                            <div className="footer-socials" style={{ display: 'flex', gap: '10px' }}>
+                                <a href={socialLinks.github} target="_blank" rel="noreferrer" className="social-icon" style={{ width: '40px', height: '40px' }}>
                                     <i className="fab fa-github"></i>
                                 </a>
-                                <a href={socialLinks.linkedin} target="_blank" rel="noreferrer" className="footer-social-icon">
+                                <a href={socialLinks.linkedin} target="_blank" rel="noreferrer" className="social-icon" style={{ width: '40px', height: '40px' }}>
                                     <i className="fab fa-linkedin"></i>
                                 </a>
                             </div>
                         </div>
-
-                        <div className="footer-col">
-                            <div className="footer-col-title">Navigation</div>
-                            <div className="footer-nav-links">
-                                <Link to="/" className="footer-link"><span className="footer-link-arrow">→</span> home</Link>
-                                <Link to="/projects" className="footer-link"><span className="footer-link-arrow">→</span> works</Link>
-                                <Link to="/skills" className="footer-link"><span className="footer-link-arrow">→</span> skills</Link>
-                                <Link to="/about" className="footer-link"><span className="footer-link-arrow">→</span> about-me</Link>
-                                <Link to="/contacts" className="footer-link"><span className="footer-link-arrow">→</span> contacts</Link>
-                            </div>
-                        </div>
-
-                        <div className="footer-col">
-                            <div className="footer-col-title">System Status</div>
-                            <div className="footer-stats">
-                                <div className="footer-stat-row">
-                                    <span className="footer-stat-label">UPTIME</span>
-                                    <span className="footer-stat-value">99.98%</span>
-                                </div>
-                                <div className="footer-stat-row">
-                                    <span className="footer-stat-label">LATENCY</span>
-                                    <span className="footer-stat-value">24ms</span>
-                                </div>
-                                <div className="footer-stat-row">
-                                    <span className="footer-stat-label">LAST_SYNC</span>
-                                    <span className="footer-stat-value footer-stat-live">{currentTime}</span>
-                                </div>
-                                <div className="footer-status-badge">
-                                    <div className="footer-status-dot"></div>
-                                    All Systems Operational
-                                </div>
-                            </div>
-                        </div>
                     </div>
 
-                    <div className="footer-bottom">
-                        <p className="footer-copyright">© 2026 Bhanusai. Crafted with <span className="footer-heart">Knowledge</span> and code.</p>
-                        <a href="#" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }} className="footer-back-top">
-                            <i className="fas fa-arrow-up"></i>
-                            <span>Back to Top</span>
+                    <div className="footer-bottom" style={{ borderTop: '1px solid rgba(255,107,107,0.05)', paddingTop: '2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <p className="footer-copyright" style={{ fontSize: '0.7rem', opacity: '0.4' }}>© 2026 BHANUSAI. ALL RIGHTS RESERVED.</p>
+                        <a href="#" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }} className="footer-back-top" style={{ fontSize: '0.7rem', color: 'var(--accent-primary)', textDecoration: 'none' }}>
+                            TOP <i className="fas fa-arrow-up"></i>
                         </a>
                     </div>
                 </footer>

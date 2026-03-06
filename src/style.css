@@ -1173,7 +1173,7 @@ body {
 /* Floating Skill Orbs */
 .floating-skills {
   position: absolute;
-  top: 0;
+  top: 12rem;
   left: 0;
   width: 100%;
   height: 100%;
@@ -8637,7 +8637,7 @@ footer {
   }
 
   .premium-actions {
-    display: none;
+    display: flex !important;
   }
 
   .hero-text h1,
@@ -8923,4 +8923,411 @@ footer {
   line-height: 1.8;
   color: var(--text-secondary);
   font-size: 1.1rem;
+}
+
+/* ==========================================================================
+   Experience Section Styles
+   ========================================================================== */
+.experience-page {
+  padding-top: 120px;
+  padding-bottom: 100px;
+}
+
+.timeline-container {
+  position: relative;
+  max-width: 1000px;
+  margin: 60px auto 0;
+  padding: 20px 0;
+}
+
+.timeline-line {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, transparent, var(--accent-primary), var(--accent-glow), transparent);
+  transform: translateX(-50%);
+  opacity: 0.5;
+}
+
+.timeline-item {
+  position: relative;
+  width: 50%;
+  margin-bottom: 60px;
+  opacity: 0;
+  animation: fadeInUp 0.8s forwards;
+}
+
+.timeline-item.left {
+  left: 0;
+  padding-right: 50px;
+  text-align: right;
+}
+
+.timeline-item.right {
+  left: 50%;
+  padding-left: 50px;
+}
+
+.timeline-dot {
+  position: absolute;
+  top: 25px;
+  width: 20px;
+  height: 20px;
+  z-index: 10;
+}
+
+.timeline-item.left .timeline-dot {
+  right: -10px;
+}
+
+.timeline-item.right .timeline-dot {
+  left: -10px;
+}
+
+.dot-inner {
+  width: 100%;
+  height: 100%;
+  background: var(--accent-primary);
+  border-radius: 50%;
+  border: 3px solid var(--bg-dark);
+}
+
+.dot-pulse {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--accent-primary);
+  border-radius: 50%;
+  opacity: 0.5;
+  animation: sonarPulse 2s infinite;
+}
+
+.timeline-content {
+  padding: 30px;
+  position: relative;
+  border-radius: 20px;
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.timeline-content:hover {
+  transform: translateY(-5px) scale(1.02);
+}
+
+.timeline-year {
+  display: inline-block;
+  padding: 4px 12px;
+  background: rgba(var(--accent-primary-rgb), 0.1);
+  color: var(--accent-primary);
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 15px;
+  border: 1px solid rgba(var(--accent-primary-rgb), 0.2);
+}
+
+.timeline-title {
+  font-size: 1.4rem;
+  color: var(--text-bright);
+  margin-bottom: 5px;
+}
+
+.timeline-company {
+  font-size: 1rem;
+  color: var(--accent-secondary);
+  margin-bottom: 15px;
+}
+
+.timeline-desc {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--text-dim);
+  margin-bottom: 20px;
+}
+
+.timeline-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: inherit;
+}
+
+.tag-chip {
+  padding: 4px 10px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 6px;
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+@media (max-width: 768px) {
+  .timeline-line {
+    left: 30px;
+  }
+
+  .timeline-item {
+    width: 100%;
+    padding-left: 70px !important;
+    padding-right: 0 !important;
+    text-align: left !important;
+  }
+
+  .timeline-item.right {
+    left: 0;
+  }
+
+  .timeline-dot {
+    left: 20px !important;
+    right: auto !important;
+  }
+
+  .timeline-tags {
+    justify-content: flex-start;
+  }
+}
+
+/* ==========================================================================
+   Mobile Navigation & Hamburger Styles
+   ========================================================================== */
+.mobile-toggle {
+  display: none;
+  background: transparent !important;
+  border: none !important;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+  z-index: 2010;
+  outline: none !important;
+}
+
+.hamburger-box {
+  width: 30px;
+  height: 24px;
+  display: inline-block;
+  position: relative;
+}
+
+.hamburger-inner,
+.hamburger-inner::before,
+.hamburger-inner::after {
+  width: 30px;
+  height: 2px;
+  background-color: var(--accent-primary);
+  position: absolute;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+.hamburger-inner {
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.hamburger-inner::before {
+  content: "";
+  display: block;
+  top: -8px;
+}
+
+.hamburger-inner::after {
+  content: "";
+  display: block;
+  bottom: -8px;
+}
+
+.mobile-toggle.active .hamburger-inner {
+  background-color: transparent;
+}
+
+.mobile-toggle.active .hamburger-inner::before {
+  transform: translateY(8px) rotate(45deg);
+}
+
+.mobile-toggle.active .hamburger-inner::after {
+  transform: translateY(-8px) rotate(-45deg);
+}
+
+/* Neural Mobile Header Animations */
+@keyframes neural-scan {
+  0% {
+    left: -100%;
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
+
+  100% {
+    left: 100%;
+    opacity: 0;
+  }
+}
+
+@keyframes link-slide-in {
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.mobile-only-nav {
+  display: none !important;
+}
+
+.desktop-only-nav {
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .mobile-only-nav {
+    display: flex !important;
+  }
+
+  .desktop-only-nav {
+    display: none !important;
+  }
+
+  .terminal-breadcrumb {
+    display: none !important;
+  }
+
+  .premium-header {
+    overflow: hidden !important;
+    /* Contain the scanning line */
+    padding: 0.8rem 1.5rem !important;
+    background: rgba(10, 14, 26, 0.85) !important;
+    border: 1px solid rgba(255, 107, 107, 0.2) !important;
+    z-index: 2000 !important;
+  }
+
+  .premium-header::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent-primary), transparent);
+    animation: neural-scan 3s infinite linear;
+    pointer-events: none;
+  }
+
+  .mobile-toggle {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    margin-left: auto;
+    z-index: 2100;
+    background: transparent !important;
+    width: 40px;
+    height: 40px;
+  }
+
+  .premium-nav {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 100% !important;
+    height: 100vh;
+    background: radial-gradient(circle at top right, rgba(26, 31, 46, 0.98), rgba(10, 14, 26, 0.99));
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    transition: right 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+    z-index: 1900;
+  }
+
+  .premium-nav.mobile-active {
+    right: 0;
+  }
+
+  .nav-wrapper {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 2rem !important;
+    width: 100%;
+    padding: 2rem;
+  }
+
+  .premium-nav-item {
+    font-size: 2rem !important;
+    font-weight: 800 !important;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    opacity: 0;
+    transform: translateX(30px);
+    transition: all 0.4s ease;
+  }
+
+  .premium-nav.mobile-active .premium-nav-item {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  /* Staggered entry for links */
+  .premium-nav-item:nth-child(1) {
+    transition-delay: 0.1s;
+  }
+
+  .premium-nav-item:nth-child(2) {
+    transition-delay: 0.2s;
+  }
+
+  .premium-nav-item:nth-child(3) {
+    transition-delay: 0.3s;
+  }
+
+  .premium-nav-item:nth-child(4) {
+    transition-delay: 0.4s;
+  }
+
+  .premium-nav-item:nth-child(5) {
+    transition-delay: 0.5s;
+  }
+
+  .premium-nav-item:nth-child(6) {
+    transition-delay: 0.6s;
+  }
+
+  /* Compress Footer */
+  .cosmic-footer {
+    padding: 30px 0 !important;
+  }
+
+  .footer-grid {
+    gap: 1.5rem !important;
+  }
+
+  .footer-stat-row {
+    font-size: 0.65rem !important;
+    padding: 4px !important;
+  }
+}
+
+.floating-skills {
+  top: 15rem !important;
+  z-index: 0 !important;
+}
+
+.footer-col-title {
+  font-family: "Fira Code", monospace;
+}
+
+.footer-col-title::after {
+  content: "";
+}
+
+.footer-stat-row {
+  font-family: "Fira Code", monospace;
 }

@@ -3,20 +3,37 @@ import { Link } from 'react-router-dom'
 import hackerMe from '../assets/hacker-me.png'
 
 const About = () => {
+    const [revealedIds, setRevealedIds] = React.useState(new Set());
+
     React.useEffect(() => {
         const observerOptions = { threshold: 0.1 };
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                if (entry.isIntersecting) entry.target.classList.add('active');
+                if (entry.isIntersecting) {
+                    const id = entry.target.getAttribute('data-reveal-id');
+                    if (id) {
+                        setRevealedIds(prev => {
+                            if (prev.has(id)) return prev;
+                            const next = new Set(prev);
+                            next.add(id);
+                            return next;
+                        });
+                    }
+                }
             });
         }, observerOptions);
+
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
         return () => observer.disconnect();
     }, []);
 
     return (
         <div className="about-page-wrapper">
-            <section id="about" className="about-hero-section reveal">
+            <section
+                id="about"
+                className={`about-hero-section reveal ${revealedIds.has('about-hero') ? 'active' : ''}`}
+                data-reveal-id="about-hero"
+            >
                 {/* Concentric circle background art */}
                 <div className="about-circles-bg">
                     <div className="circle-ring ring-1"></div>
@@ -51,7 +68,10 @@ const About = () => {
             </section>
 
             {/* Stats / Milestones Section */}
-            <section className="about-stats-section reveal">
+            <section
+                className={`about-stats-section reveal ${revealedIds.has('about-stats') ? 'active' : ''}`}
+                data-reveal-id="about-stats"
+            >
                 <div className="stats-grid">
                     <div className="stat-item">
                         <span className="stat-number">10+</span>
@@ -73,7 +93,10 @@ const About = () => {
             </section>
 
             {/* Detailed Bio Section */}
-            <section className="about-bio-section reveal">
+            <section
+                className={`about-bio-section reveal ${revealedIds.has('about-bio') ? 'active' : ''}`}
+                data-reveal-id="about-bio"
+            >
                 <div className="section-title">
                     <h2>&gt; mission_objective</h2>
                     <div className="section-line"></div>
