@@ -244,6 +244,12 @@ const Layout = ({ splashDone }) => {
                                 </div>
                                 <span className="logo-main">Bhanusai</span>
                             </Link>
+
+                            {/* Mobile-only live status indicator */}
+                            <div className="system-status-mobile mobile-only-nav">
+                                <span className="status-dot-pulse"></span>
+                                <span className="status-text-mobile">SYS.ONLINE</span>
+                            </div>
                         </div>
 
                         <div className="terminal-breadcrumb">
