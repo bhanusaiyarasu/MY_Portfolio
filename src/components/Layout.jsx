@@ -50,6 +50,12 @@ const Layout = ({ splashDone }) => {
         };
     }, []);
 
+    // Scroll to Top and Close Mobile Menu on Navigation
+    useEffect(() => {
+        window.scrollTo({ top: 0, behavior: 'instant' });
+        setMobileMenuOpen(false);
+    }, [location.pathname]);
+
     // Magnetic logic — subtle effect with bounds to prevent collision
     useEffect(() => {
         const magneticElements = document.querySelectorAll('.btn-premium');
@@ -191,21 +197,7 @@ const Layout = ({ splashDone }) => {
                 <div className="wave-animation"></div>
             </div>
 
-            {/* Enhanced Sidebar with More Elements */}
-            <div className={`sidebar ${isScrolled ? 'scrolled' : ''}`}>
-                <div className="sidebar-line"></div>
-                <div className="social-indicator">
-                    <div className="indicator-dot"></div>
-                </div>
-                <a href={socialLinks.github} target="_blank" rel="noreferrer" className="social-icon">
-                    <i className="fab fa-github"></i>
-                    <span className="social-tooltip">GitHub</span>
-                </a>
-                <a href={socialLinks.linkedin} target="_blank" rel="noreferrer" className="social-icon">
-                    <i className="fab fa-linkedin"></i>
-                    <span className="social-tooltip">LinkedIn</span>
-                </a>
-            </div>
+
 
             <div className="portfolio-wrapper">
                 <div className="hacker-grid"></div>
@@ -227,71 +219,39 @@ const Layout = ({ splashDone }) => {
                     </div>
                 </nav>
 
-                {/* Premium Interactive Header */}
-                <header className="premium-header">
-                    <div className="system-pulse-line"></div>
-                    <div className="scroll-progress-container">
-                        <div id="header-progress-bar" className="scroll-progress-bar"></div>
-                    </div>
 
-                    <div className="header-left">
-                        <div className="logo-section">
-                            <Link to="/" className="premium-logo">
-                                <div className="logo-orb">
-                                    <img src={logoImg} alt="Bhanusai" className="logo-img" />
-                                    <div className="orb-glow"></div>
-                                    <div className="orb-sonar"></div>
-                                </div>
-                                <span className="logo-main">Bhanusai</span>
-                            </Link>
 
-                            {/* Mobile-only live status indicator */}
-                            <div className="system-status-mobile mobile-only-nav">
-                                <span className="status-dot-pulse"></span>
-                                <span className="status-text-mobile">SYS.ONLINE</span>
-                            </div>
-                        </div>
-
-                        <div className="terminal-breadcrumb">
-                            <span className="user">bhanusai@uplink</span>
-                            <span className="sep">:</span>
-                            <span className="path">~{location.pathname === '/' ? '' : location.pathname}</span>
-                            <span className="prompt">$</span>
-                            <span className="cursor-blink">_</span>
-                        </div>
-                    </div>
-
-                    <nav className="premium-nav desktop-only-nav">
-                        <div className="nav-wrapper">
-                            {navItems.map((item) => (
-                                <NavLink
-                                    key={item.name}
-                                    to={item.path}
-                                    className={({ isActive }) =>
-                                        `premium-nav-item ${isActive ? 'active' : ''}`
-                                    }
-                                >
-                                    <span className="nav-label">{item.name}</span>
-                                    <div className="liquid-hover"></div>
-                                </NavLink>
-                            ))}
-                        </div>
+                {/* Minimalist Floating Header */}
+                <header className={`small-header ${isScrolled ? 'scrolled' : ''}`}>
+                    <Link to="/" className="small-header-logo">
+                        <img src={logoImg} alt="Bhanusai" className="sh-logo-img" />
+                    </Link>
+                    
+                    <nav className="sh-nav">
+                        {navItems.slice(0, 5).map((item) => (
+                            <NavLink
+                                key={item.name}
+                                to={item.path}
+                                className={({ isActive }) => `sh-nav-item ${isActive ? 'active' : ''}`}
+                            >
+                                {item.name}
+                            </NavLink>
+                        ))}
                     </nav>
 
-                    <div className="premium-actions">
-                        <Link to="/contacts" className="premium-cta">
-                            Let's Talk
-                        </Link>
-                        <button
-                            className={`mobile-toggle ${mobileMenuOpen ? 'active' : ''}`}
-                            onClick={toggleMobileMenu}
-                            aria-label="Toggle Menu"
-                        >
-                            <div className="hamburger-box">
-                                <div className="hamburger-inner"></div>
-                            </div>
-                        </button>
-                    </div>
+                    <Link to="/contacts" className="sh-cta">
+                        LET'S TALK
+                    </Link>
+
+                    <button 
+                        className={`mobile-toggle ${mobileMenuOpen ? 'active' : ''}`} 
+                        onClick={toggleMobileMenu}
+                        aria-label="Toggle Navigation"
+                    >
+                        <div className="hamburger-box">
+                            <div className="hamburger-inner"></div>
+                        </div>
+                    </button>
                 </header>
 
                 <main className="content-area">
@@ -316,6 +276,7 @@ const Layout = ({ splashDone }) => {
                             <div className="footer-col-title">MODULES</div>
                             <div className="footer-nav-links">
                                 <Link to="/" className="footer-link">HOME</Link>
+                                <Link to="/about" className="footer-link">ABOUT</Link>
                                 <Link to="/projects" className="footer-link">WORKS</Link>
                                 <Link to="/experience" className="footer-link">EXPERIENCE</Link>
                                 <Link to="/skills" className="footer-link">SKILLS</Link>

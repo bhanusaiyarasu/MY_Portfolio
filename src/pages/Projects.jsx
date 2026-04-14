@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import ribhanceImg from '../assets/ribhance_showcase.png'
 import portfolioImg from '../assets/portfolio_showcase.png'
+import huskImg from '../assets/husk_harbour.png'
+import voxalisImg from '../assets/voxalis_3d.png'
 
 const Projects = () => {
-    const [selectedProject, setSelectedProject] = useState(null);
-    const [activeFilter, setActiveFilter] = useState('all');
-    const [hoveredId, setHoveredId] = useState(null);
     const [revealedIds, setRevealedIds] = useState(new Set());
 
     useEffect(() => {
@@ -33,41 +32,67 @@ const Projects = () => {
     const projectsData = [
         {
             id: 1,
-            title: "RIBHANCE",
-            cat: "AI_MOBILE_APP",
-            filterTag: "mobile",
-            tech: ["Android Studio", "ML Kit", "Java"],
-            desc: "An innovative application leveraging AI and machine learning to transform real-world photos into high-fidelity artistic sketches. Built natively on Android with advanced image processing pipelines.",
-            stats: { lines: "8K+", commits: "120+", status: "Active" },
-            img: ribhanceImg,
-            color: "#ff6b6b"
+            title: "HUSK HARBOUR",
+            tag: "WEB_ECOSYSTEM",
+            desc: "Smart delivery ecosystem and dashboard concept for optimized logistics.",
+            img: huskImg,
+            span: "lg",
+            theme: "theme-neon",
+            github: "https://github.com/bhanusaiyarasu/husk-harbour"
         },
         {
             id: 2,
+            title: "VOXALIS 3D",
+            tag: "WEBGL_EXP",
+            desc: "Immersive 3D environment built with WebGL and Three.js.",
+            img: voxalisImg,
+            span: "md",
+            theme: "theme-void",
+            github: "https://github.com/bhanusaiyarasu/voxalis-3d"
+        },
+        {
+            id: 3,
+            title: "RIBHANCE",
+            tag: "MOBILE_AI",
+            desc: "AI-driven image processing for native Android applications.",
+            img: ribhanceImg,
+            span: "wide",
+            theme: "theme-sakura",
+            github: "https://github.com/bhanusaiyarasu/RIBHANCE"
+        },
+        {
+            id: 4,
             title: "Portfolio V2",
-            cat: "WEB_ECOSYSTEM",
-            filterTag: "web",
-            tech: ["React", "Vite", "CSS3"],
-            desc: "A high-performance developer showcase featuring magnetic interactions, holographic depth effects, cinematic splash screen, and responsive glassmorphism design throughout.",
-            stats: { lines: "6K+", commits: "80+", status: "Live" },
+            tag: "FULL_LAYOUT",
+            desc: "High-performance developer showcase with magnetic UI.",
             img: portfolioImg,
-            color: "#4ecdc4"
+            span: "sm",
+            theme: "theme-pulse",
+            github: "https://github.com/bhanusaiyarasu/MY_Portfolio"
         }
     ];
 
-    const filters = [
-        { label: 'All Projects', value: 'all' },
-        { label: 'Web', value: 'web' },
-        { label: 'Mobile', value: 'mobile' }
-    ];
-
-    const filtered = activeFilter === 'all'
-        ? projectsData
-        : projectsData.filter(p => p.filterTag === activeFilter);
-
     return (
-        <section id="projects" className="projects-section-wrap">
-            {/* Section Header */}
+        <section id="projects" className="projects-section-wrap stacked-section">
+            <div className="hero-edge-ui">
+                <div className="edge-top">
+                    <div className="top-left-group">
+                        <div className="social-side-group">
+                            <div className="social-indicator-hub">
+                                <div className="indicator-line"></div>
+                                <div className="indicator-dot"></div>
+                            </div>
+                            <a href="https://github.com/bhanusaiyarasu" target="_blank" rel="noreferrer" className="social-icon-btn"><i className="fab fa-github"></i></a>
+                            <a href="https://www.linkedin.com/in/bhanu-sai-yarasu-9a8591357" target="_blank" rel="noreferrer" className="social-icon-btn"><i className="fab fa-linkedin-in"></i></a>
+                        </div>
+                        <div className="system-status">
+                            <div className="status-dot"></div>
+                            SYSTEM ACTIVE // VAULT_MODULE
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div
                 className={`section-title reveal ${revealedIds.has('proj-title') ? 'active' : ''}`}
                 data-reveal-id="proj-title"
@@ -76,117 +101,34 @@ const Projects = () => {
                 <div className="section-line"></div>
             </div>
 
-            {/* Filter Pills */}
-            <div
-                className={`proj-filters reveal ${revealedIds.has('proj-filters') ? 'active' : ''}`}
-                data-reveal-id="proj-filters"
-            >
-                {filters.map(f => (
-                    <button
-                        key={f.value}
-                        className={`proj-filter-pill ${activeFilter === f.value ? 'active' : ''}`}
-                        onClick={() => setActiveFilter(f.value)}
-                    >
-                        {f.label}
-                    </button>
-                ))}
-            </div>
-
-            {/* Projects Grid — Interactive Cards */}
-            <div className="proj-showcase-grid">
-                {filtered.map((proj, idx) => (
+            <div className="bento-grid-container">
+                {projectsData.map((proj, idx) => (
                     <div
                         key={proj.id}
+                        className={`bento-card ${proj.span} ${proj.theme} reveal ${revealedIds.has(`proj-${proj.id}`) ? 'active' : ''}`}
                         data-reveal-id={`proj-${proj.id}`}
-                        className={`proj-showcase-card reveal ${revealedIds.has(`proj-${proj.id}`) ? 'active' : ''} ${hoveredId === proj.id ? 'is-hovered' : ''}`}
-                        style={{ animationDelay: `${idx * 0.15}s`, '--card-accent': proj.color }}
-                        onMouseEnter={() => setHoveredId(proj.id)}
-                        onMouseLeave={() => setHoveredId(null)}
-                        onClick={() => setSelectedProject(proj)}
+                        style={{ transitionDelay: `${idx * 0.1}s` }}
                     >
-                        {/* Image Section */}
-                        <div className="proj-card-image">
-                            <img src={proj.img} alt={proj.title} />
-                            <div className="proj-card-scanline"></div>
-                            <div className="proj-card-overlay">
-                                <span className="proj-click-hint">
-                                    <i className="fas fa-expand-arrows-alt"></i>
-                                    VIEW DETAILS
-                                </span>
-                            </div>
-                        </div>
-
-                        {/* Info Section */}
-                        <div className="proj-card-info">
-                            <div className="proj-card-cat">&gt; {proj.cat}</div>
-                            <h3 className="proj-card-title">{proj.title}</h3>
-                            <p className="proj-card-desc">{proj.desc}</p>
-
-                            {/* Tech Stack Chips */}
-                            <div className="proj-tech-chips">
-                                {proj.tech.map(t => (
-                                    <span key={t} className="tech-chip">{t}</span>
-                                ))}
-                            </div>
-
-                            {/* Stats */}
-                            <div className="proj-card-stats">
-                                <div className="proj-stat">
-                                    <span className="stat-val">{proj.stats.lines}</span>
-                                    <span className="stat-label">Lines</span>
-                                </div>
-                                <div className="proj-stat">
-                                    <span className="stat-val">{proj.stats.commits}</span>
-                                    <span className="stat-label">Commits</span>
-                                </div>
-                                <div className="proj-stat">
-                                    <span className="stat-val status-live">{proj.stats.status}</span>
-                                    <span className="stat-label">Status</span>
-                                </div>
+                        <div 
+                            className="bento-card-bg" 
+                            style={{ backgroundImage: `url(${proj.img})` }}
+                        ></div>
+                        <div className="bento-card-content">
+                            <span className="bento-tag">{proj.tag}</span>
+                            <h3 className="bento-title">{proj.title}</h3>
+                            <p className="bento-desc">{proj.desc}</p>
+                            <div className="bento-links">
+                                <a href={proj.github} target="_blank" rel="noreferrer" className="bento-link">
+                                    <i className="fab fa-github"></i> GITHUB
+                                </a>
+                                <a href="#" className="bento-link">
+                                    <i className="fas fa-external-link-alt"></i> LIVE DEMO
+                                </a>
                             </div>
                         </div>
                     </div>
                 ))}
             </div>
-
-            {/* Project Details Modal */}
-            {selectedProject && (
-                <div className="project-modal-backdrop" onClick={() => setSelectedProject(null)}>
-                    <div className="project-modal-content" onClick={e => e.stopPropagation()}>
-                        <button className="modal-close-btn" onClick={() => setSelectedProject(null)}>
-                            <i className="fas fa-times"></i>
-                        </button>
-
-                        <div className="modal-inner">
-                            <div className="modal-image">
-                                <img src={selectedProject.img} alt={selectedProject.title} />
-                            </div>
-                            <div className="modal-details">
-                                <div className="modal-header">
-                                    <span className="project-cat">{selectedProject.cat}</span>
-                                    <h2>{selectedProject.title}</h2>
-                                    <div className="proj-tech-chips" style={{ marginTop: '1rem' }}>
-                                        {selectedProject.tech.map(t => (
-                                            <span key={t} className="tech-chip">{t}</span>
-                                        ))}
-                                    </div>
-                                </div>
-                                <div className="modal-body">
-                                    <p>{selectedProject.desc}</p>
-                                </div>
-                                <div className="modal-actions">
-                                    <a href="#" className="btn-premium btn-primary-grad">
-                                        <i className="fas fa-play"></i> Live Demo
-                                    </a>
-                                    <a href="#" className="btn-premium btn-secondary-glass">
-                                        <i className="fas fa-code"></i> Source
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            )}
         </section>
     )
 }

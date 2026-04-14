@@ -10,12 +10,15 @@ import About from './pages/About'
 import Contacts from './pages/Contacts'
 import Experience from './pages/Experience'
 
+import SplashCursor from './components/SplashCursor'
+
 function App() {
     const [splashDone, setSplashDone] = useState(false);
 
     return (
         <>
             {!splashDone && <SplashScreen onComplete={() => setSplashDone(true)} />}
+            <SplashCursor />
             <div className={`app-main-wrapper ${splashDone ? 'app-revealed' : 'app-hidden'}`}>
                 <Router>
                     <Routes>
