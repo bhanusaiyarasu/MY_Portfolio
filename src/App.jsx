@@ -1,40 +1,46 @@
 import React, { useState } from 'react'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import './style.css'
-import Layout from './components/Layout'
-import SplashScreen from './components/SplashScreen'
-import Home from './pages/Home'
-import Projects from './pages/Projects'
-import Skills from './pages/Skills'
-import About from './pages/About'
-import Contacts from './pages/Contacts'
-import Experience from './pages/Experience'
+import './styles/globals.css'
+import { useLenis } from './hooks/useLenis'
 
-import SplashCursor from './components/SplashCursor'
+// Components
+import CustomCursor from './components/cursor/CustomCursor'
+import Preloader from './components/sections/Preloader'
+import Navbar from './components/nav/Navbar'
+import Hero from './components/sections/Hero'
+import About from './components/sections/About'
+import Skills from './components/sections/Skills'
+import Projects from './components/sections/Projects'
+import Experience from './components/sections/Experience'
+import Stats from './components/sections/Stats'
+import Contact from './components/sections/Contact'
+import Footer from './components/footer/Footer'
 
 function App() {
-    const [splashDone, setSplashDone] = useState(false);
+  const [loaded, setLoaded] = useState(false)
+  
+  // Initialize Lenis smooth scroll on desktop
+  useLenis()
 
-    return (
-        <>
-            {!splashDone && <SplashScreen onComplete={() => setSplashDone(true)} />}
-            <SplashCursor />
-            <div className={`app-main-wrapper ${splashDone ? 'app-revealed' : 'app-hidden'}`}>
-                <Router>
-                    <Routes>
-                        <Route path="/" element={<Layout splashDone={splashDone} />}>
-                            <Route index element={<Home />} />
-                            <Route path="projects" element={<Projects />} />
-                            <Route path="experience" element={<Experience />} />
-                            <Route path="skills" element={<Skills />} />
-                            <Route path="about" element={<About />} />
-                            <Route path="contacts" element={<Contacts />} />
-                        </Route>
-                    </Routes>
-                </Router>
-            </div>
-        </>
-    )
+  return (
+    <>
+      <Preloader onComplete={() => setLoaded(true)} />
+      <CustomCursor />
+      
+      <div className="app-main">
+        <Navbar />
+        <main>
+          <Hero loaded={loaded} />
+          <About />
+          <Skills />
+          <Projects />
+          <Experience />
+          <Stats />
+          <Contact />
+        </main>
+        <Footer />
+      </div>
+    </>
+  )
 }
 
 export default App

@@ -1,0 +1,38 @@
+export const experiences = [
+  {
+    id: 1,
+    role: 'Developer Intern',
+    company: 'Tech Industry',
+    location: 'Hyderabad, India',
+    period: '2024 — Present',
+    description: 'Building production web applications using React and modern CMS. Focused on performance optimization, responsive design, and agile workflows.',
+    tech: ['React', 'WordPress', 'JavaScript', 'CSS3'],
+  },
+  {
+    id: 2,
+    role: 'Diploma in Computer Engineering',
+    company: 'GRIET',
+    location: 'Hyderabad, India',
+    period: '2023 — 2026',
+    description: 'Mastering data structures, algorithms, OOP concepts, and relational databases. Maintaining top performance in academic programming.',
+    tech: ['C++', 'Java', 'SQL', 'Data Structures'],
+  },
+  {
+    id: 3,
+    role: 'AI & Prompt Engineering',
+    company: 'Self-directed',
+    location: 'Remote',
+    period: '2024 — Present',
+    description: 'Leveraging AI tools like Cursor, Windsurf, and advanced prompt design to accelerate development workflows by 3x.',
+    tech: ['AI/ML', 'Prompt Design', 'Automation', 'LLMs'],
+  },
+  {
+    id: 4,
+    role: 'Open Source & Side Projects',
+    company: 'GitHub',
+    location: 'Remote',
+    period: '2023 — Present',
+    description: 'Building creative side projects including 3D web experiences, AI-powered mobile apps, and interactive UI component libraries.',
+    tech: ['Three.js', 'Android', 'WebGL', 'Open Source'],
+  },
+]
