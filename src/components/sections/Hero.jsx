@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react'
 import { gsap } from '../../utils/gsap'
-import HeroScene from '../three/HeroScene'
+import HeroParticles from '../three/HeroParticles'
 import SplitText from '../ui/SplitText'
 import TextScramble from '../ui/TextScramble'
 
@@ -53,8 +53,8 @@ const Hero = ({ loaded }) => {
       // Draw underline SVG path
       tl.fromTo(
         underlineRef.current,
-        { width: 0 },
-        { width: '100%', duration: 1.0, ease: 'power3.out' },
+        { strokeDasharray: 320, strokeDashoffset: 320 },
+        { strokeDashoffset: 0, duration: 0.8, ease: 'power2.out' },
         0.8
       )
 
@@ -72,7 +72,7 @@ const Hero = ({ loaded }) => {
 
   return (
     <section ref={containerRef} id="home" className="hero">
-      <HeroScene />
+      <HeroParticles />
       
       <div className="hero-edge-tl text-mono text-label" ref={statsRef} style={{ opacity: loaded ? 1 : 0 }}>
         Bhanu Sai Yarasu <br />
@@ -83,15 +83,37 @@ const Hero = ({ loaded }) => {
         <div ref={labelRef} className="hero-label text-mono" style={{ opacity: loaded ? 1 : 0 }}>
           Available for Opportunities 2026
         </div>
-        <h1 className="text-hero-name" style={{ overflow: 'hidden' }}>
-          <span className="hero-name-line" style={{ display: 'block', overflow: 'hidden' }}>
+        <h1 className="text-hero-name" style={{ overflow: 'hidden', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <span className="hero-name-line" style={{ display: 'block', overflow: 'hidden', position: 'relative' }}>
             <SplitText text="BHANU" charClassName="split-char" />
+            {/* Organic SVG Underline below BHANU */}
+            <svg 
+              className="hero-underline-svg" 
+              viewBox="0 0 300 20" 
+              style={{ 
+                position: 'absolute',
+                bottom: '-2px',
+                left: '50%',
+                transform: 'translateX(-50%)',
+                width: '100%', 
+                height: '16px', 
+                display: 'block' 
+              }}
+            >
+              <path
+                ref={underlineRef}
+                d="M10 8 Q 150 2 290 8 T 285 11"
+                fill="none"
+                stroke="var(--accent-primary)"
+                strokeWidth="3.5"
+                strokeLinecap="round"
+              />
+            </svg>
           </span>
-          <span className="hero-name-line" style={{ display: 'block', overflow: 'hidden' }}>
-            <SplitText text="SAI" charClassName="split-char" />
+          <span className="hero-name-line" style={{ display: 'block', overflow: 'hidden', fontSize: '0.8em', marginTop: '0.5rem' }}>
+            <SplitText text="SAI YARASU" charClassName="split-char" />
           </span>
         </h1>
-        <div ref={underlineRef} className="hero-underline" />
         
         <div className="hero-role" ref={roleRef} style={{ opacity: loaded ? 1 : 0 }}>
           {loaded ? (

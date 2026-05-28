@@ -1,54 +1,57 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useTheme } from '../../context/ThemeContext'
 import { gsap } from '../../utils/gsap'
+import ThemeToggle from '../ui/ThemeToggle'
 
 const NAV_ITEMS = [
-  { label: 'Home', href: '#home' },
+  { label: 'Work', href: '#projects' },
   { label: 'About', href: '#about' },
   { label: 'Skills', href: '#skills' },
-  { label: 'Projects', href: '#projects' },
-  { label: 'Experience', href: '#experience' },
+  { label: 'Journey', href: '#experience' },
   { label: 'Contact', href: '#contact' },
 ]
 
 const Navbar = () => {
-  const { theme, toggleTheme } = useTheme()
-  const [isVisible, setIsVisible] = useState(false)
+  const { theme } = useTheme()
+  const [isFloating, setIsFloating] = useState(false)
   const [activeSection, setActiveSection] = useState('home')
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const mobileMenuRef = useRef(null)
   const linksRef = useRef([])
 
-  // Floating pill visibility logic
+  // Track scroll to trigger floating pill state
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 80) {
-        setIsVisible(true)
+        setIsFloating(true)
       } else {
-        setIsVisible(false)
+        setIsFloating(false)
       }
     }
 
     window.addEventListener('scroll', handleScroll)
-    // Run once initially in case of reload
     handleScroll()
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  // IntersectionObserver for active section highlight
+  // Highlight active section based on scroll
   useEffect(() => {
     const sections = NAV_ITEMS.map(item => document.querySelector(item.href)).filter(Boolean)
-    
+    // Add home section to watch list
+    const homeSection = document.querySelector('#home')
+    if (homeSection) sections.push(homeSection)
+
     const observerOptions = {
       root: null,
-      rootMargin: '-30% 0px -60% 0px',
+      rootMargin: '-40% 0px -50% 0px',
       threshold: 0
     }
 
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          setActiveSection(entry.target.id)
+          const id = entry.target.id
+          setActiveSection(id === 'home' ? 'home' : `#${id}`)
         }
       })
     }, observerOptions)
@@ -64,16 +67,14 @@ const Navbar = () => {
   useEffect(() => {
     if (isMobileMenuOpen) {
       document.body.classList.add('no-scroll')
-      // Animate mobile menu open
       gsap.to(mobileMenuRef.current, {
         opacity: 1,
         pointerEvents: 'auto',
         duration: 0.4,
         ease: 'power2.out',
       })
-      // Stagger items
       gsap.fromTo(
-        linksRef.current,
+        linksRef.current.filter(Boolean),
         { y: 30, opacity: 0 },
         { y: 0, opacity: 1, duration: 0.4, stagger: 0.08, ease: 'power2.out', delay: 0.2 }
       )
@@ -100,46 +101,95 @@ const Navbar = () => {
     setIsMobileMenuOpen(false)
     const targetElement = document.querySelector(href)
     if (targetElement) {
-      targetElement.scrollIntoView({ behavior: 'smooth' })
+      // Find offset to adjust for floating menu height
+      const offset = 90
+      const elementPosition = targetElement.getBoundingClientRect().top
+      const offsetPosition = elementPosition + window.pageYOffset - offset
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      })
     }
   }
 
   return (
     <>
-      <header className={`navbar ${isVisible ? 'visible' : ''}`}>
-        <a href="#home" className="nav-logo" onClick={(e) => handleLinkClick(e, '#home')} data-cursor="link">
-          BS
+      <header className={`navbar ${isFloating ? 'floating-pill' : ''}`}>
+        {/* Logo Monogram */}
+        <a 
+          href="#home" 
+          className="nav-logo" 
+          onClick={(e) => handleLinkClick(e, '#home')} 
+          data-cursor="link"
+          style={{
+            fontFamily: 'var(--font-display)',
+            fontSize: '28px',
+            color: 'var(--accent-primary)',
+            letterSpacing: '0.05em',
+            textTransform: 'uppercase',
+            transition: 'color 0.3s ease',
+          }}
+        >
+          B·S
         </a>
 
+        {/* Navigation links (hidden on mobile) */}
         <nav className="nav-links">
           {NAV_ITEMS.map((item) => (
             <a
               key={item.href}
               href={item.href}
-              className={`nav-link ${activeSection === item.href.slice(1) ? 'active' : ''}`}
+              className={`nav-link ${activeSection === item.href ? 'active' : ''}`}
               onClick={(e) => handleLinkClick(e, item.href)}
               data-cursor="link"
+              style={{
+                fontFamily: 'var(--font-body)',
+                fontSize: '0.85rem',
+                letterSpacing: '0.05em',
+                textTransform: 'uppercase',
+                position: 'relative',
+                padding: '0.25rem 0',
+                transition: 'color 0.3s ease',
+              }}
             >
               {item.label}
             </a>
           ))}
         </nav>
 
-        <div className="nav-right">
-          <button
-            className="theme-toggle"
-            onClick={toggleTheme}
-            aria-label="Toggle Theme"
-            data-cursor="link"
-          >
-            <div className="theme-toggle-knob">
-              {theme === 'dark' ? '☀' : '☾'}
-            </div>
-          </button>
+        {/* Theme Toggle & Mobile Hamburger */}
+        <div className="nav-right" style={{ display: 'flex', alignItems: 'center', gap: '1.25rem' }}>
+          <ThemeToggle />
 
-          <div className="availability-badge" data-cursor="text">
-            <span className="availability-dot" />
-            <span>Available</span>
+          {/* Availability Dot (only visible when floating or large screens) */}
+          <div 
+            className="availability-badge" 
+            data-cursor="text"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.4rem',
+              fontFamily: 'var(--font-mono)',
+              fontSize: '0.7rem',
+              textTransform: 'uppercase',
+              letterSpacing: '0.05em',
+              color: 'var(--text-secondary)',
+            }}
+          >
+            <span 
+              className="availability-dot" 
+              style={{
+                width: '6px',
+                height: '6px',
+                borderRadius: '50%',
+                backgroundColor: '#c8ff00',
+                display: 'inline-block',
+                boxShadow: '0 0 10px #c8ff00',
+                animation: 'pulse 2s infinite',
+              }}
+            />
+            <span className="availability-text">Available</span>
           </div>
 
           <button
@@ -156,15 +206,41 @@ const Navbar = () => {
       </header>
 
       {/* Mobile Menu Overlay */}
-      <div ref={mobileMenuRef} className="mobile-menu">
+      <div 
+        ref={mobileMenuRef} 
+        className="mobile-menu"
+        style={{
+          position: 'fixed',
+          inset: 0,
+          backgroundColor: '#070707',
+          zIndex: 999,
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+          gap: '2.5rem',
+          opacity: 0,
+          pointerEvents: 'none',
+          transition: 'opacity 0.4s ease',
+        }}
+      >
+        <div className="grain-overlay" style={{ opacity: 0.05 }} />
         {NAV_ITEMS.map((item, index) => (
           <a
             key={item.href}
             ref={(el) => (linksRef.current[index] = el)}
             href={item.href}
-            className={`nav-link ${activeSection === item.href.slice(1) ? 'active' : ''}`}
+            className={`nav-link ${activeSection === item.href ? 'active' : ''}`}
             onClick={(e) => handleLinkClick(e, item.href)}
             data-cursor="link"
+            style={{
+              fontFamily: 'var(--font-heading)',
+              fontSize: '2rem',
+              fontWeight: 700,
+              letterSpacing: '0.05em',
+              textTransform: 'uppercase',
+              color: 'var(--text-secondary)',
+            }}
           >
             {item.label}
           </a>
